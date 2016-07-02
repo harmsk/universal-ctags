@@ -85,7 +85,7 @@ typedef struct {
 
 		/* Size of file (pointed to) */
 	unsigned long size;
-} fileStatus; 
+} fileStatus;
 
 /*
 *   FUNCTION PROTOTYPES
@@ -138,6 +138,13 @@ extern char* relativeFilename (const char *file, const char *dir);
 extern MIO *tempFile (const char *const mode, char **const pName);
 
 extern char* baseFilenameSansExtensionNew (const char *const fileName, const char *const templateExt);
+
+#ifdef EMSCRIPTEN
+extern const char* virtualFilePath(const char *const path);
+#define FILE_PATH(path) virtualFilePath(path)
+#else
+#define FILE_PATH(path) path
+#endif
 
 #endif  /* CTAGS_MAIN_ROUTINES_H */
 

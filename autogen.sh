@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ctags_files=`make -f makefiles/list-translator-input.mak`
+ctags_files=`make -s -f makefiles/list-translator-input.mak`
 misc/dist-test-cases > makefiles/test-cases.mak && \
     if autoreconf -vfi; then
 	if which perl > /dev/null; then

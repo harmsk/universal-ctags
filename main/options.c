@@ -2729,7 +2729,7 @@ static boolean parseFileOptions (const char* const fileName)
 	}
 	else
 	{
-		FILE* const fp = fopen (fileName, "r");
+		FILE* const fp = fopen (FILE_PATH(fileName), "r");
 		if (fp == NULL)
 			verbose (format, fileName, "not found");
 		else

@@ -649,6 +649,27 @@ if test "$etags_name_executable" != etags ; then
 	AC_MSG_NOTICE(Changing name of 'etags' for $etags_name_executable)
 fi
 
+# Emscripten support
+# ------------------
+
+AC_MSG_CHECKING(emscripten)
+if test -n "$EMSCRIPTEN"; then
+  AC_MSG_RESULT(yes)
+
+  EXEEXT=".bc"
+	AC_SUBST([EXEEXT])
+
+  CTAGS_TEST="./ctags"
+  READ_TEST="./readtags"
+else
+	AC_MSG_RESULT(no)
+
+  CTAGS_TEST="./ctags$(EXEEXT)"
+  READ_TEST="./readtags$(EXEEXT)"
+fi
+AC_SUBST([CTAGS_TEST])
+AC_SUBST([READ_TEST])
+
 # Output files
 # ------------
 

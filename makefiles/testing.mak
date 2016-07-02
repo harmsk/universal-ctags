@@ -2,8 +2,6 @@
 
 check: tmain units
 
-CTAGS_TEST = ./ctags$(EXEEXT)
-READ_TEST = ./readtags$(EXEEXT)
 TIMEOUT=
 LANGUAGES=
 CATEGORIES=

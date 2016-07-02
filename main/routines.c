@@ -65,6 +65,10 @@
 # include "mbcs.h"
 #endif
 
+#ifdef EMSCRIPTEN
+# include <emscripten.h>
+#endif
+
 #include "options.h"
 
 /*
@@ -385,7 +389,7 @@ extern fileStatus *eStat (const char *const fileName)
 	{
 		eStatFree (&file);
 		file.name = eStrdup (fileName);
-		if (lstat (file.name, &status) != 0)
+		if (lstat (FILE_PATH(file.name), &status) != 0)
 			file.exists = FALSE;
 		else
 		{
@@ -835,5 +839,34 @@ extern MIO *tempFile (const char *const mode, char **const pName)
 	*pName = name;
 	return mio;
 }
+
+#ifdef EMSCRIPTEN
+
+/* emscripten access the virtual mounted filesystem */
+extern const char* virtualFilePath(const char *const path)
+{
+	char *virtualPath = (char*)EM_ASM_ARGS({
+		var path = require('path');
+
+		var filePath = Pointer_stringify($0);
+		if (path.isAbsolute(filePath)) {
+			filePath = Module['fileSystemMount'] + filePath;
+			var buffer = Module._malloc(filePath.length + 1);
+			Module.writeStringToMemory(filePath, buffer, false);
+			return buffer;
+		} else {
+			return 0;
+		}
+	}, path );
+
+	if (virtualPath != NULL) {
+		/* memory leak warning: the virtualPath memory is never freed. */
+		return virtualPath;
+	} else {
+		return path;
+	}
+}
+
+#endif /* EMSCRIPTEN */
 
 /* vi:set tabstop=4 shiftwidth=4: */

@@ -345,7 +345,7 @@ static boolean createTagsFromListFile (const char *const fileName)
 		resize = createTagsFromFileInput (stdin, FALSE);
 	else
 	{
-		FILE *const fp = fopen (fileName, "r");
+		FILE *const fp = fopen (FILE_PATH(fileName), "r");
 		if (fp == NULL)
 			error (FATAL | PERROR, "cannot open list file \"%s\"", fileName);
 		resize = createTagsFromFileInput (fp, FALSE);

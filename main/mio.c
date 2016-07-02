@@ -200,7 +200,7 @@ MIO *mio_new_file_full (const char *filename,
 	mio = xMalloc (1, MIO);
 	if (mio)
 	{
-		FILE *fp = open_func (filename, mode);
+		FILE *fp = open_func (FILE_PATH(filename), mode);
 
 		if (! fp)
 		{

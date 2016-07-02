@@ -453,7 +453,7 @@ extern MIO *getMio (const char *const fileName, const char *const openMode,
 	    && (size > MAX_IN_MEMORY_FILE_SIZE || size == 0))
 		return mio_new_file (fileName, openMode);
 
-	src = fopen (fileName, openMode);
+	src = fopen (FILE_PATH(fileName), openMode);
 	if (!src)
 		return NULL;
 
@@ -971,11 +971,11 @@ char* readLineRawWithNoSeek (vString* const vline, FILE *const pp)
 
 	vStringClear (vline);
 	nlcr = FALSE;
-	
+
 	while (1)
 	{
 		c = fgetc (pp);
-		
+
 		if (c == EOF)
 		{
 			if (! feof (pp))
@@ -985,7 +985,7 @@ char* readLineRawWithNoSeek (vString* const vline, FILE *const pp)
 		}
 
 		result = vStringValue (vline);
-		
+
 		if (c == '\n' || c == '\r')
 			nlcr = TRUE;
 		else if (nlcr)
