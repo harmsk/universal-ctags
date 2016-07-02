@@ -21,9 +21,10 @@
 #ifndef QUALIFIER
 #include "general.h"  /* must always come first */
 
-#include "routines.h"
 #include "debug.h"
 #endif
+
+#include "routines.h"
 
 #include "mio.h"
 
